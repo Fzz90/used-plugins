@@ -3,7 +3,7 @@
 //==========================================================================
 
 /*:
-@plugindesc ♦5.2.0♦ Add responsive on screen controls to mobile games!
+@plugindesc ♦1.0.0♦ Add responsive on screen controls to mobile games!
 @author Hakuen Studio
 
 @help
@@ -482,7 +482,12 @@ Imported.Eli_MobileControls = true;
 
     createArea() {
       const mainRect = this.divs[0].getBoundingClientRect();
-      this.area = new Rectangle(mainRect.x, mainRect.y, mainRect.width, mainRect.height);
+      this.area = new Rectangle(
+        mainRect.x,
+        mainRect.y,
+        mainRect.width,
+        mainRect.height,
+      );
     }
 
     initialize(parameters) {
@@ -515,12 +520,16 @@ Imported.Eli_MobileControls = true;
     }
 
     setMouseListeners() {
-      document.addEventListener("mousemove", this.handleMove.bind(this), { passive: false });
+      document.addEventListener("mousemove", this.handleMove.bind(this), {
+        passive: false,
+      });
       document.addEventListener("mouseup", this.handleUp.bind(this));
     }
 
     setMobileListeners() {
-      document.addEventListener("touchmove", this.handleMove.bind(this), { passive: false });
+      document.addEventListener("touchmove", this.handleMove.bind(this), {
+        passive: false,
+      });
       document.addEventListener("touchend", this.handleUp.bind(this));
     }
 
@@ -549,14 +558,21 @@ Imported.Eli_MobileControls = true;
     }
 
     handleMove(event) {
-      if (!this.active || (event.changedTouches && !this.trackChangedTouches(event))) return;
+      if (
+        !this.active ||
+        (event.changedTouches && !this.trackChangedTouches(event))
+      )
+        return;
       this.operateHandleMove(event);
     }
 
     operateHandleMove(event) {}
 
     isAnotherTouchId(event) {
-      return event.changedTouches && this.touchId !== event.changedTouches[0].identifier;
+      return (
+        event.changedTouches &&
+        this.touchId !== event.changedTouches[0].identifier
+      );
     }
 
     handleUp(event) {
@@ -705,11 +721,18 @@ Imported.Eli_MobileControls = true;
 
     createArea() {
       const mainRect = this.divs[0].getBoundingClientRect();
-      this.area = new Rectangle(mainRect.x, mainRect.y, mainRect.width, mainRect.height);
+      this.area = new Rectangle(
+        mainRect.x,
+        mainRect.y,
+        mainRect.width,
+        mainRect.height,
+      );
     }
 
     setStyleToElements() {
-      this.imgs[0].addEventListener("load", this.onLoad.bind(this), { once: true });
+      this.imgs[0].addEventListener("load", this.onLoad.bind(this), {
+        once: true,
+      });
     }
 
     appendElements() {
@@ -783,7 +806,10 @@ Imported.Eli_MobileControls = true;
     }
 
     canAddToScene(sceneName) {
-      return this.parameters.scenes.includes(sceneName) && this.parameters.enableCondition();
+      return (
+        this.parameters.scenes.includes(sceneName) &&
+        this.parameters.enableCondition()
+      );
     }
   }
 
@@ -923,11 +949,24 @@ Imported.Eli_MobileControls = true;
       const down = new Rectangle(downLeft.right, left.bottom, width, height);
       const downRight = new Rectangle(down.right, left.bottom, width, height);
 
-      this.directionAreas = [rect0, downLeft, down, downRight, left, center, right, upLeft, up, upRight];
+      this.directionAreas = [
+        rect0,
+        downLeft,
+        down,
+        downRight,
+        left,
+        center,
+        right,
+        upLeft,
+        up,
+        upRight,
+      ];
     }
 
     setStyleToElements() {
-      this.imgs[0].addEventListener("load", this.onLoad.bind(this), { once: true });
+      this.imgs[0].addEventListener("load", this.onLoad.bind(this), {
+        once: true,
+      });
     }
 
     appendElements() {
@@ -958,7 +997,10 @@ Imported.Eli_MobileControls = true;
 
     getClientCoordinates(event) {
       if (event.changedTouches) {
-        return { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
+        return {
+          x: event.changedTouches[0].clientX,
+          y: event.changedTouches[0].clientY,
+        };
       } else {
         return { x: event.clientX, y: event.clientY };
       }
@@ -1017,7 +1059,10 @@ Imported.Eli_MobileControls = true;
     }
 
     canAddToScene(sceneName) {
-      return this.parameters.scenes.includes(sceneName) && this.parameters.enableCondition();
+      return (
+        this.parameters.scenes.includes(sceneName) &&
+        this.parameters.enableCondition()
+      );
     }
   }
 
@@ -1120,7 +1165,9 @@ Imported.Eli_MobileControls = true;
       imgStyle.height = `auto`;
 
       divStyle.width = this.imgs[0].width;
-      this.imgs[1].addEventListener("load", this.onStickImgLoad.bind(this), { once: true });
+      this.imgs[1].addEventListener("load", this.onStickImgLoad.bind(this), {
+        once: true,
+      });
     }
 
     onStickImgLoad(ev) {
@@ -1138,12 +1185,16 @@ Imported.Eli_MobileControls = true;
       divStyle.width = this.imgs[1].width;
       divStyle.top = `${yPos()}px`;
       divStyle.left = `${xPos()}px`;
-      this.maxDistance = Math.abs(this.divs[0].clientWidth / 2 - this.divs[1].clientWidth / 2) + this.parameters.extraDistance;
+      this.maxDistance =
+        Math.abs(this.divs[0].clientWidth / 2 - this.divs[1].clientWidth / 2) +
+        this.parameters.extraDistance;
       this.createArea();
     }
 
     setStyleToElements() {
-      this.imgs[0].addEventListener("load", this.onLoad.bind(this), { once: true });
+      this.imgs[0].addEventListener("load", this.onLoad.bind(this), {
+        once: true,
+      });
     }
 
     appendElements() {
@@ -1215,7 +1266,10 @@ Imported.Eli_MobileControls = true;
 
     setDragStart(event) {
       if (event.changedTouches) {
-        this.dragStart = { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
+        this.dragStart = {
+          x: event.changedTouches[0].clientX,
+          y: event.changedTouches[0].clientY,
+        };
       } else {
         this.dragStart = { x: event.clientX, y: event.clientY };
       }
@@ -1280,7 +1334,9 @@ Imported.Eli_MobileControls = true;
 
       const isRight = this.isBetweenOrEqual(angle, -45, 45);
       const isDown = this.isBetweenOrEqual(angle, 45, 135);
-      const isLeft = this.isBetweenOrEqual(angle, 135, 180) || this.isBetweenOrEqual(angle, -180, -135);
+      const isLeft =
+        this.isBetweenOrEqual(angle, 135, 180) ||
+        this.isBetweenOrEqual(angle, -180, -135);
       const isUp = this.isBetweenOrEqual(angle, -135, -45);
       const isDownRight = this.isBetweenOrEqual(angle, 22.5, 67.5);
       const isDownLeft = this.isBetweenOrEqual(angle, 112.5, 157.5);
@@ -1301,7 +1357,10 @@ Imported.Eli_MobileControls = true;
     }
 
     canAddToScene(sceneName) {
-      return this.parameters.scenes.includes(sceneName) && this.parameters.enableCondition();
+      return (
+        this.parameters.scenes.includes(sceneName) &&
+        this.parameters.enableCondition()
+      );
     }
   }
 
@@ -1309,13 +1368,19 @@ Imported.Eli_MobileControls = true;
   class Parameters {
     constructor(parameters) {
       this.allowedPlatforms = JSON.parse(parameters.allowedPlatforms);
-      this.disableDoubleTouchMenu = parameters.disableDoubleTouchMenu === "true";
+      this.disableDoubleTouchMenu =
+        parameters.disableDoubleTouchMenu === "true";
       this.disableScreenMove = parameters.disableScreenMove === "true";
       this.hideOnMessage = parameters.hideOnMessage === "true";
       this.fixButtonSize = (parameters.fixButtonSize || "false") === "true";
-      this.fixButtonInterval = Math.max(Number(parameters.fixButtonInterval || "120"), 1);
+      this.fixButtonInterval = Math.max(
+        Number(parameters.fixButtonInterval || "120"),
+        1,
+      );
       this.dPadType = parameters.dPadType;
-      this.controlButton = this.parseControlButtonParameters(parameters.controlButton);
+      this.controlButton = this.parseControlButtonParameters(
+        parameters.controlButton,
+      );
       this.joystickPad = this.parseJoystickParameters(parameters.joystickPad);
       this.singlePad = this.parseSinglePadParameters(parameters.singlePad);
       this.buttons = this.parseRegularButtonParameters(parameters.buttons);
@@ -1349,7 +1414,9 @@ Imported.Eli_MobileControls = true;
         padY: Number(param.padY),
         scenes: JSON.parse(param.scenes),
         verticalOrientation: param.verticalOrientation,
-        enableCondition: param.condition ? new Function(`${JSON.parse(param.condition)}`) : new Function("return true"),
+        enableCondition: param.condition
+          ? new Function(`${JSON.parse(param.condition)}`)
+          : new Function("return true"),
       };
     }
 
@@ -1367,7 +1434,9 @@ Imported.Eli_MobileControls = true;
         padY: Number(param.padY),
         scenes: JSON.parse(param.scenes),
         verticalOrientation: param.verticalOrientation,
-        enableCondition: param.condition ? new Function(`${JSON.parse(param.condition)}`) : new Function("return true"),
+        enableCondition: param.condition
+          ? new Function(`${JSON.parse(param.condition)}`)
+          : new Function("return true"),
       };
     }
 
@@ -1384,12 +1453,20 @@ Imported.Eli_MobileControls = true;
           padX: Number(button.padX),
           padY: Number(button.padY),
           scenes: JSON.parse(button.scenes),
-          scriptIn: button.scriptIn.length > 4 ? new Function(JSON.parse(button.scriptIn)) : new Function(),
-          scriptOut: button.scriptOut.length > 4 ? new Function(JSON.parse(button.scriptOut)) : new Function(),
+          scriptIn:
+            button.scriptIn.length > 4
+              ? new Function(JSON.parse(button.scriptIn))
+              : new Function(),
+          scriptOut:
+            button.scriptOut.length > 4
+              ? new Function(JSON.parse(button.scriptOut))
+              : new Function(),
           verticalOrientation: button.verticalOrientation,
           vibration: Number(button.vibration),
           width: Number(button.width),
-          enableCondition: button.condition ? new Function(`${JSON.parse(button.condition)}`) : new Function("return true"),
+          enableCondition: button.condition
+            ? new Function(`${JSON.parse(button.condition)}`)
+            : new Function("return true"),
         });
       }
 
@@ -1494,19 +1571,32 @@ Imported.Eli_MobileControls = true;
     },
 
     isMenuDisabledByDoubleTouch() {
-      return this.param().disableDoubleTouchMenu && !this.controlButton.isHidingButtons;
+      return (
+        this.param().disableDoubleTouchMenu &&
+        !this.controlButton.isHidingButtons
+      );
     },
 
     isControlButtonDisablingMenuByDoubleTouch() {
-      return (this.controlButton.isHidingButtons && !this.param().controlButton.enableDoubleTouchMenu) || this.controlButton.area.contains(TouchInput._x, TouchInput._y);
+      return (
+        (this.controlButton.isHidingButtons &&
+          !this.param().controlButton.enableDoubleTouchMenu) ||
+        this.controlButton.area.contains(TouchInput._x, TouchInput._y)
+      );
     },
 
     isMovementDisabledByScreenTouch() {
-      return this.param().disableScreenMove && !this.controlButton.isHidingButtons;
+      return (
+        this.param().disableScreenMove && !this.controlButton.isHidingButtons
+      );
     },
 
     isControlButtonDisablingMovementByScreenTouch() {
-      return (this.controlButton.isHidingButtons && !this.param().controlButton.enableScreenMove) || this.controlButton.area.contains(TouchInput._x, TouchInput._y);
+      return (
+        (this.controlButton.isHidingButtons &&
+          !this.param().controlButton.enableScreenMove) ||
+        this.controlButton.area.contains(TouchInput._x, TouchInput._y)
+      );
     },
 
     getDiv() {
@@ -1616,19 +1706,33 @@ Imported.Eli_MobileControls = true;
     },
 
     isAllowedOnDesktop() {
-      return Utils.isNwjs() && this.parameters.allowedPlatforms.includes("Desktop");
+      return (
+        Utils.isNwjs() && this.parameters.allowedPlatforms.includes("Desktop")
+      );
     },
 
     isAllowedOnMobile() {
-      return Utils.isMobileDevice() && this.parameters.allowedPlatforms.includes("Mobile");
+      return (
+        Utils.isMobileDevice() &&
+        this.parameters.allowedPlatforms.includes("Mobile")
+      );
     },
 
     isAllowedOnWebBrowser() {
-      return !Utils.isNwjs() && !Utils.isMobileDevice() && this.parameters.allowedPlatforms.includes("Web Browser");
+      return (
+        !Utils.isNwjs() &&
+        !Utils.isMobileDevice() &&
+        this.parameters.allowedPlatforms.includes("Web Browser")
+      );
     },
 
     isMobileControlsAllowed() {
-      return Utils.isOptionValid("test") || this.isAllowedOnDesktop() || this.isAllowedOnMobile() || this.isAllowedOnWebBrowser();
+      return (
+        Utils.isOptionValid("test") ||
+        this.isAllowedOnDesktop() ||
+        this.isAllowedOnMobile() ||
+        this.isAllowedOnWebBrowser()
+      );
     },
   };
 
@@ -1730,7 +1834,10 @@ Imported.Eli_MobileControls = true;
         Scene_Base.prototype.keepRefreshingMobileButtonsForScene = function () {
           Plugin.timeForRefresh++;
 
-          if (Plugin.canRefreshButtonsForScene() && Plugin.timeForRefresh >= Plugin.param().fixButtonInterval) {
+          if (
+            Plugin.canRefreshButtonsForScene() &&
+            Plugin.timeForRefresh >= Plugin.param().fixButtonInterval
+          ) {
             Plugin.refreshButtonsForScene();
             Plugin.timeForRefresh = 0;
           }
@@ -1749,7 +1856,9 @@ Imported.Eli_MobileControls = true;
       };
 
       Scene_Map.prototype.isMenuDisabledByMobileControls = function () {
-        const isMobileDisabling = Plugin.isMenuDisabledByDoubleTouch() || Plugin.isControlButtonDisablingMenuByDoubleTouch();
+        const isMobileDisabling =
+          Plugin.isMenuDisabledByDoubleTouch() ||
+          Plugin.isControlButtonDisablingMenuByDoubleTouch();
         return isMobileDisabling && TouchInput.isCancelled();
       };
     }
@@ -1766,7 +1875,10 @@ Imported.Eli_MobileControls = true;
       };
 
       Window_Message.prototype.canUpdateMobileControls = function () {
-        return Plugin.param().hideOnMessage && !Plugin.getControlButton().isHidingButtons;
+        return (
+          Plugin.param().hideOnMessage &&
+          !Plugin.getControlButton().isHidingButtons
+        );
       };
 
       Window_Message.prototype.canHideMobileControls = function () {

@@ -1,5 +1,5 @@
 /*:
- * @plugindesc v1.1.0 [EM] Adds a YEP_OptionsCore (Visual) option to enable/disable Minimap access. Uses YEP_KeyboardConfig binding for the Minimap toggle key. 
+ * @plugindesc v1.1.0 [EM] Adds a YEP_OptionsCore (Visual) option to enable/disable Minimap access. Uses YEP_KeyboardConfig binding for the Minimap toggle key.
  * @author Faiz Syihab
  *
  * @param VisualCategoryKeyword
@@ -108,10 +108,18 @@ Imported.EM_MinimapOptions = true;
   const PLUGIN_NAME = "EM_MinimapOptions";
   const params = PluginManager.parameters(PLUGIN_NAME);
 
-  const VISUAL_KEYWORD = String(params["VisualCategoryKeyword"] || "Visual").toLowerCase();
-  const INSERT_FROM_BOTTOM = Math.max(0, Number(params["InsertFromBottom"] || 1));
+  const VISUAL_KEYWORD = String(
+    params["VisualCategoryKeyword"] || "Visual",
+  ).toLowerCase();
+  const INSERT_FROM_BOTTOM = Math.max(
+    0,
+    Number(params["InsertFromBottom"] || 1),
+  );
   const OPT_NAME = String(params["OptionName"] || "Toggle Minimap");
-  const OPT_HELP = String(params["OptionHelp"] || "Show: you can use your Key Config binding for Minimap to toggle the minimap.\nHide: minimap is forced hidden and the key does nothing.");
+  const OPT_HELP = String(
+    params["OptionHelp"] ||
+      "Show: you can use your Key Config binding for Minimap to toggle the minimap.\nHide: minimap is forced hidden and the key does nothing.",
+  );
   const TXT_SHOW = String(params["StatusShowText"] || "Show");
   const TXT_HIDE = String(params["StatusHideText"] || "Hide");
   const DEFAULT_ENABLED = String(params["DefaultEnabled"] || "true") === "true";
@@ -138,7 +146,10 @@ Imported.EM_MinimapOptions = true;
   // Minimap control (UPP_MINIMAP)
   // ---------------------------------------------------------------------------
   API._hasUppMinimap = function () {
-    return typeof $miniMapWindow !== "undefined" || typeof _startMapHidden !== "undefined";
+    return (
+      typeof $miniMapWindow !== "undefined" ||
+      typeof _startMapHidden !== "undefined"
+    );
   };
 
   API._setStartHiddenFlag = function (hidden) {
@@ -149,23 +160,32 @@ Imported.EM_MinimapOptions = true;
   };
 
   API.isMinimapVisible = function () {
-    if (typeof $miniMapWindow !== "undefined" && $miniMapWindow) return !!$miniMapWindow.visible;
+    if (typeof $miniMapWindow !== "undefined" && $miniMapWindow)
+      return !!$miniMapWindow.visible;
     return false;
   };
 
   API.showMinimap = function () {
-    if (typeof $miniMapWindow !== "undefined" && $miniMapWindow) $miniMapWindow.show();
-    if (typeof $miniMapPlayer !== "undefined" && $miniMapPlayer) $miniMapPlayer.show();
-    if (typeof $miniMapBorder !== "undefined" && $miniMapBorder) $miniMapBorder.show();
-    if (typeof $miniMapName !== "undefined" && $miniMapName) $miniMapName.show();
+    if (typeof $miniMapWindow !== "undefined" && $miniMapWindow)
+      $miniMapWindow.show();
+    if (typeof $miniMapPlayer !== "undefined" && $miniMapPlayer)
+      $miniMapPlayer.show();
+    if (typeof $miniMapBorder !== "undefined" && $miniMapBorder)
+      $miniMapBorder.show();
+    if (typeof $miniMapName !== "undefined" && $miniMapName)
+      $miniMapName.show();
     API._setStartHiddenFlag(false);
   };
 
   API.hideMinimap = function () {
-    if (typeof $miniMapWindow !== "undefined" && $miniMapWindow) $miniMapWindow.hide();
-    if (typeof $miniMapPlayer !== "undefined" && $miniMapPlayer) $miniMapPlayer.hide();
-    if (typeof $miniMapBorder !== "undefined" && $miniMapBorder) $miniMapBorder.hide();
-    if (typeof $miniMapName !== "undefined" && $miniMapName) $miniMapName.hide();
+    if (typeof $miniMapWindow !== "undefined" && $miniMapWindow)
+      $miniMapWindow.hide();
+    if (typeof $miniMapPlayer !== "undefined" && $miniMapPlayer)
+      $miniMapPlayer.hide();
+    if (typeof $miniMapBorder !== "undefined" && $miniMapBorder)
+      $miniMapBorder.hide();
+    if (typeof $miniMapName !== "undefined" && $miniMapName)
+      $miniMapName.hide();
     API._setStartHiddenFlag(true);
   };
 
@@ -221,10 +241,13 @@ Imported.EM_MinimapOptions = true;
 
     // If KeyboardConfig exists, prefer its stored maps.
     if (Imported.YEP_KeyboardConfig) {
-      if (ConfigManager.defaultMap) changed = tryAssignDefaultKey(ConfigManager.defaultMap) || changed;
-      if (ConfigManager.keyMapper) changed = tryAssignDefaultKey(ConfigManager.keyMapper) || changed;
+      if (ConfigManager.defaultMap)
+        changed = tryAssignDefaultKey(ConfigManager.defaultMap) || changed;
+      if (ConfigManager.keyMapper)
+        changed = tryAssignDefaultKey(ConfigManager.keyMapper) || changed;
       // Avoid stomping WASD layout if DEFAULT_KEYCODE is already used there.
-      if (ConfigManager.wasdMap) changed = tryAssignDefaultKey(ConfigManager.wasdMap) || changed;
+      if (ConfigManager.wasdMap)
+        changed = tryAssignDefaultKey(ConfigManager.wasdMap) || changed;
 
       if (changed && ConfigManager.applyKeyConfig) {
         ConfigManager.applyKeyConfig();
@@ -312,7 +335,8 @@ Imported.EM_MinimapOptions = true;
 
     // Safer toggling: avoid during transitions/messages/events.
     if (SceneManager.isSceneChanging()) return;
-    if ($gameMap && $gameMap.isEventRunning && $gameMap.isEventRunning()) return;
+    if ($gameMap && $gameMap.isEventRunning && $gameMap.isEventRunning())
+      return;
     if ($gameMessage && $gameMessage.isBusy && $gameMessage.isBusy()) return;
 
     if (Input.isTriggered(ACTION)) {
@@ -333,7 +357,8 @@ Imported.EM_MinimapOptions = true;
   }
 
   function findVisualCategory() {
-    if (!window.Yanfly || !Yanfly.Param || !Yanfly.Param.OptionsCategories) return null;
+    if (!window.Yanfly || !Yanfly.Param || !Yanfly.Param.OptionsCategories)
+      return null;
     const cats = Yanfly.Param.OptionsCategories;
     for (let i = 0; i < cats.length; i++) {
       const rawName = cats[i] && cats[i].Name ? cats[i].Name : "";
@@ -349,8 +374,12 @@ Imported.EM_MinimapOptions = true;
     if (Yanfly.Param.OptionsSymbols[SYMBOL]) return;
 
     Yanfly.Param.OptionsSymbols[SYMBOL] = {
-      SaveConfigCode: JSON.stringify("config[symbol] = !!ConfigManager[symbol];"),
-      LoadConfigCode: JSON.stringify("ConfigManager[symbol] = !!config[symbol];"),
+      SaveConfigCode: JSON.stringify(
+        "config[symbol] = !!ConfigManager[symbol];",
+      ),
+      LoadConfigCode: JSON.stringify(
+        "ConfigManager[symbol] = !!config[symbol];",
+      ),
     };
   }
 
@@ -363,7 +392,11 @@ Imported.EM_MinimapOptions = true;
       "this.changePaintOpacity(this.isCommandEnabled(index));\n" +
       "this.drawOptionsName(index);\n" +
       "var value = this.getConfigValue(symbol);\n" +
-      'var text = value ? "' + TXT_SHOW.replace(/"/g, '\\"') + '" : "' + TXT_HIDE.replace(/"/g, '\\"') + '";\n' +
+      'var text = value ? "' +
+      TXT_SHOW.replace(/"/g, '\\"') +
+      '" : "' +
+      TXT_HIDE.replace(/"/g, '\\"') +
+      '";\n' +
       "this.drawText(text, titleWidth, rect.y, statusWidth, 'center');\n";
 
     const okCode =
@@ -390,18 +423,26 @@ Imported.EM_MinimapOptions = true;
       "---Settings---": "",
       HelpDesc: JSON.stringify(OPT_HELP),
       Symbol: SYMBOL,
-      ShowHide: JSON.stringify("show = true;"),
+      ShowHide: JSON.stringify("show = $gameSwitches.value(128);"),
       Enable: JSON.stringify("enabled = true;"),
       Ext: JSON.stringify("ext = 0;"),
       "---Functions---": "",
-      MakeCommandCode: JSON.stringify("this.addCommand(name, symbol, enabled, ext);"),
+      MakeCommandCode: JSON.stringify(
+        "this.addCommand(name, symbol, enabled, ext);",
+      ),
       DrawItemCode: JSON.stringify(drawCode),
       ProcessOkCode: JSON.stringify(okCode),
       CursorRightCode: JSON.stringify(rightCode),
       CursorLeftCode: JSON.stringify(leftCode),
-      DefaultConfigCode: JSON.stringify("ConfigManager[symbol] = " + (DEFAULT_ENABLED ? "true" : "false") + ";"),
-      SaveConfigCode: JSON.stringify("config[symbol] = !!ConfigManager[symbol];"),
-      LoadConfigCode: JSON.stringify("ConfigManager[symbol] = !!config[symbol];"),
+      DefaultConfigCode: JSON.stringify(
+        "ConfigManager[symbol] = " + (DEFAULT_ENABLED ? "true" : "false") + ";",
+      ),
+      SaveConfigCode: JSON.stringify(
+        "config[symbol] = !!ConfigManager[symbol];",
+      ),
+      LoadConfigCode: JSON.stringify(
+        "ConfigManager[symbol] = !!config[symbol];",
+      ),
     };
   }
 
@@ -427,5 +468,4 @@ Imported.EM_MinimapOptions = true;
   if (Imported.YEP_OptionsCore) {
     injectIntoVisualCategory();
   }
-
 })();
